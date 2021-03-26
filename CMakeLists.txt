@@ -37,8 +37,6 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL Android)
 
     list(APPEND RUN_COMMAND COMMAND ${ADB} shell mkdir -p ${ANDROID_RUN_DIR})
     list(APPEND RUN_COMMAND COMMAND ${ADB} push hello ${ANDROID_RUN_DIR})
-    list(APPEND RUN_COMMAND COMMAND echo ${ANDROID_LD_LIBRARY_PATH})
-    list(APPEND RUN_COMMAND COMMAND ${ADB} shell ls /system/lib)
     list(APPEND RUN_COMMAND COMMAND ${ADB} shell ${ANDROID_RUN_DIR}/hello)
 
 else()

@@ -30,14 +30,14 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL Android)
     set(ADB ${ANDROID_SDK_DIR}/platform-tools/adb)
 
     if(${CMAKE_ANDROID_ARCH} STREQUAL x86 OR ${CMAKE_ANDROID_ARCH} STREQUAL arm)
-        set(ANDROID_LD_LIBRARY_PATH /system/apex/com.android.art/lib:/apex/com.android.art/lib)
+        set(ANDROID_LD_LIBRARY_PATH /apex/com.android.art/lib)
     else()
-        set(ANDROID_LD_LIBRARY_PATH /system/apex/com.android.art/lib64:/apex/com.android.art/lib64)
+        set(ANDROID_LD_LIBRARY_PATH /apex/com.android.art/lib64)
     endif()
 
     list(APPEND RUN_COMMAND COMMAND ${ADB} shell mkdir -p ${ANDROID_RUN_DIR})
     list(APPEND RUN_COMMAND COMMAND ${ADB} push hello ${ANDROID_RUN_DIR})
-    list(APPEND RUN_COMMAND COMMAND ${ADB} shell ${ANDROID_RUN_DIR}/hello)
+    list(APPEND RUN_COMMAND COMMAND ${ADB} shell LD_LIBRARY_PATH=${ANDROID_LD_LIBRARY_PATH} ${ANDROID_RUN_DIR}/hello)
 
 else()
     list(APPEND RUN_COMMAND COMMAND hello)

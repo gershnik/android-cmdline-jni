@@ -21,7 +21,6 @@ jobs:
       with:
         api-level: 29
         arch: x86_64
-        profile: Pixel 4
         target: google_apis
         ndk: ${{env.NDK_VER}}
         script: |

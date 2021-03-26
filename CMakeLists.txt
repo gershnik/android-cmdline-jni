@@ -29,7 +29,7 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL Android)
     set(ANDROID_SDK_DIR ${CMAKE_ANDROID_NDK}/../..)
     set(ADB ${ANDROID_SDK_DIR}/platform-tools/adb)
 
-    if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
+    if(${CMAKE_ANDROID_ARCH} STREQUAL x86 OR ${CMAKE_ANDROID_ARCH} STREQUAL arm)
         set(ANDROID_LD_LIBRARY_PATH /apex/com.android.art/lib)
     else()
         set(ANDROID_LD_LIBRARY_PATH /apex/com.android.art/lib64)

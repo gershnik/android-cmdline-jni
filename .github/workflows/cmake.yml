@@ -21,11 +21,11 @@ jobs:
     #  id: setup-ndk
     #  with:
     #    ndk-version: r21d
-    uses: reactivecircus/android-emulator-runner@v2
-       with:
-        api-level: 30
-        ndk: 21.3.6528147
-        script: echo Here
+    - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          ndk: 21.3.6528147
+          script: echo Here
 
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory

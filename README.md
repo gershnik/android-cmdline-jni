@@ -15,7 +15,7 @@ To build and run:
 ```bash
 mkdir -p build
 cd build
-cmake .. 
+cmake .. \
     -DCMAKE_BUILD_TYPE:STRING=$BUILD_TYPE \
     -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$ANDROID_NDK_PATH/build/cmake/android.toolchain.cmake \
     -DANDROID_ABI:STRING=$NDK_ARCH \

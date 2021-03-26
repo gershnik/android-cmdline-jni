@@ -10,6 +10,7 @@ on:
 env:
   BUILD_TYPE: Release
   NDK_VER: 21.3.6528147
+  NDK_ARCH: x86_64
 
 jobs:
   build:
@@ -20,13 +21,13 @@ jobs:
     - uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-        arch: x86_64
+        arch: ${{env.NDK_ARCH}}
         target: google_apis
         ndk: ${{env.NDK_VER}}
         script: |
             mkdir -p ${{runner.workspace}}/build
             cd ${{runner.workspace}}/build
-            cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE:STRING=$BUILD_TYPE -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$ANDROID_SDK_ROOT/ndk/$NDK_VER/build/cmake/android.toolchain.cmake -DANDROID_ABI:STRING=x86_64 -DANDROID_PLATFORM:STRING=19 -DANDROID_STL:STRING=c++_static
+            cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE:STRING=$BUILD_TYPE -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$ANDROID_SDK_ROOT/ndk/$NDK_VER/build/cmake/android.toolchain.cmake -DANDROID_ABI:STRING=$NDK_ARCH -DANDROID_PLATFORM:STRING=19 -DANDROID_STL:STRING=c++_static
             cmake --build . --config $BUILD_TYPE --target run
 
     

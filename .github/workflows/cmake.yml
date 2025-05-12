@@ -8,15 +8,51 @@ on:
       - 'LICENSE'
 
 jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+
+    outputs:
+      configs: ${{ steps.matrix.outputs.configs }}
+
+    steps:
+      - name: Define Matrix
+        id: matrix
+        shell: python
+        run: |
+          import json
+          import os
+
+          abis = ['x86_64']
+
+          apis = [29, 30, 35]
+
+          ndks = {
+            '21.3.6528147': 30,
+            '27.2.12479018': 35,
+            '29.0.13113456': 35
+          }
+
+          configs = []
+          
+          for ndk, max_api in ndks.items():
+            for api in apis:
+              if api > max_api:
+                continue
+              for abi in abis:
+                hosts.append({'version': ndk, 'api': api, 'arch': abi, 'jobname': f'NDK {ndk} - API {api} - ARCH {abi}'})
+
+          with open(os.environ['GITHUB_OUTPUT'], 'w') as env:
+            print('configs=' + json.dumps(configs), file=env)
+
   build:
+    needs: define-matrix
+    name: ${{ matrix.jobname }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version: [21.3.6528147, 27.2.12479018, 29.0.13113456]
-        api: [29, 30, 35]    
-        arch: [x86_64]
-    
+        include: ${{ fromJSON(needs.define-matrix.outputs.configs) }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4

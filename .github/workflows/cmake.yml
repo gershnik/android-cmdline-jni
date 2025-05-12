@@ -39,7 +39,7 @@ jobs:
               if api > max_api:
                 continue
               for abi in abis:
-                configs.append({'version': ndk, 'api': api, 'arch': abi, 'jobname': f'NDK {ndk} - API {api} - ARCH {abi}'})
+                configs.append({'version': ndk, 'api': api, 'arch': abi, 'jobname': f'{ndk} - API{api} - {abi}'})
 
           with open(os.environ['GITHUB_OUTPUT'], 'w') as env:
             print('configs=' + json.dumps(configs), file=env)
